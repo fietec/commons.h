@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 // logging
 
@@ -36,5 +37,18 @@
 
 // for classic assertion, uses eprintfn for printing the message
 #define cassert(state, msg, ...) do{if (!state) {eprintfn(msg, ##__VA_ARGS__); exit(1);}}while(0) 
+	
+// dynamic arrays
+
+#define da_append(da, item)                                                              \
+    do {                                                                                 \
+        if ((da)->count >= (da)->capacity) {                                             \
+            (da)->capacity = ((da)->capacity == 0) ? 32 : (da)->capacity*2;              \
+            (da)->items = realloc((da)->items, (da)->capacity*sizeof(*(da)->items));     \
+            assert(da)->items != NULL && "Buy more RAM lol");                            \
+        }                                                                                \
+        (da)->items[(da)->count++] = (item);                                             \
+    } while (0)
+
 
 #endif // _COMMONS_H
