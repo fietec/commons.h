@@ -50,5 +50,14 @@
         (da)->items[(da)->count++] = (item);                                             \
     } while (0)
 
+char* shift_args(int *argc, char ***argv)
+{
+	assert(*argc > 0 && "argv: out of bounds\n");
+	char *result = **argv;
+	*argc -= 1;
+	*argv += 1;
+	return result;
+}
+
 
 #endif // _COMMONS_H
