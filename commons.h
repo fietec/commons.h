@@ -18,14 +18,14 @@
 #define log(msg, ...) (printf("%s:%d " msg "\n", __FILE__, __LINE__, ##__VA_ARGS__)) 
 
 #ifndef COMMONS_COLOR // define this to enable color printing
-	// wrapper for printf for printing errors
-	#define eprintfn(msg, ...) (fprintf(stderr, "[ERROR] %s:%d " msg "\n", __FILE__,  __LINE__, ##__VA_ARGS__)) 
-	// wrapper for printf for printf for debugging
-	#define iprintfn(msg, ...) (printf("[INFO] %s:%d " msg "\n", __FILE__, __LINE__, ##__VA_ARGS__)) 
+    // wrapper for printf for printing errors
+    #define eprintfn(msg, ...) (fprintf(stderr, "[ERROR] %s:%d " msg "\n", __FILE__,  __LINE__, ##__VA_ARGS__)) 
+    // wrapper for printf for printf for debugging
+    #define iprintfn(msg, ...) (printf("[INFO] %s:%d " msg "\n", __FILE__, __LINE__, ##__VA_ARGS__)) 
 #else
-	// define color printing versions of the above macros
-	#define eprintfn(msg, ...) (fprintf(stderr, "%s[ERROR] %s:%d " msg "\n%s", ansi_rgb(196, 0, 0), __FILE__, __LINE__, ##__VA_ARGS__, ansi_end))
-	#define iprintfn(msg, ...) (fprintf(stdout, "%s[INFO] %s:%d " msg "\n%s", ansi_rgb(0, 196, 196), __FILE__, __LINE__, ##__VA_ARGS__, ansi_end))
+    // define color printing versions of the above macros
+    #define eprintfn(msg, ...) (fprintf(stderr, "%s[ERROR] %s:%d " msg "\n%s", ansi_rgb(196, 0, 0), __FILE__, __LINE__, ##__VA_ARGS__, ansi_end))
+    #define iprintfn(msg, ...) (fprintf(stdout, "%s[INFO] %s:%d " msg "\n%s", ansi_rgb(0, 196, 196), __FILE__, __LINE__, ##__VA_ARGS__, ansi_end))
 #endif // COMMONS_COLOR
 
 // arrays
@@ -37,7 +37,7 @@
 
 // for classic assertion, uses eprintfn for printing the message
 #define cassert(state, msg, ...) do{if (!state) {eprintfn(msg, ##__VA_ARGS__); exit(1);}}while(0) 
-	
+
 // dynamic arrays
 
 #define da_append(da, item)                                                              \
@@ -52,12 +52,24 @@
 
 char* shift_args(int *argc, char ***argv)
 {
-	assert(*argc > 0 && "argv: out of bounds\n");
-	char *result = **argv;
-	*argc -= 1;
-	*argv += 1;
-	return result;
+    assert(*argc > 0 && "argv: out of bounds\n");
+    char *result = **argv;
+    *argc -= 1;
+    *argv += 1;
+    return result;
 }
+
+// wrapper for atoi
+int stoi(char *s, int *pI)
+{
+    char *r = s;
+    if (*r == '-') r++;
+    while (*r != '\0'){
+        if (!isdigit(*r++)) return 1;
+    }
+    *pI = atoi(s);
+    return 0;
+} 
 
 #define return_defer(value) do{result = (value); goto defer;}while(0);
 
