@@ -33,6 +33,15 @@
 // calculates the length of an array
 #define arr_len(arr) (sizeof((arr)) / sizeof((arr)[0])) 
 
+
+// ca args
+#include <stdio.h>
+#include <stdarg.h>
+
+#define ca_num_args(type, ...) (sizeof((type[]){__VA_ARGS__}) / sizeof(type))
+#define ca_args(...) ca_num_args(typeof(__VA_ARGS__), __VA_ARGS__), __VA_ARGS__
+#define ca_args_t size_t count, ...
+
 // assertions
 
 // for classic assertion, uses eprintfn for printing the message
