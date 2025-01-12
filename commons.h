@@ -59,6 +59,8 @@ char* shift_args(int *argc, char ***argv)
 	return result;
 }
 
+#define return_defer(value) do{result = (value); goto defer;}while(0);
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
