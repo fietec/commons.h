@@ -35,12 +35,10 @@
 
 
 // ca args
-#include <stdio.h>
-#include <stdarg.h>
 
-#define ca_num_args(type, ...) (sizeof((type[]){__VA_ARGS__}) / sizeof(type))
-#define ca_args(...) ca_num_args(typeof(__VA_ARGS__), __VA_ARGS__), __VA_ARGS__
-#define ca_args_t size_t count, ...
+#define ca_len(...) sizeof((typeof(__VA_ARGS__)[]){__VA_ARGS__})/sizeof(typeof(__VA_ARGS__))
+#define ca_args(...) ca_len(__VA_ARGS__), __VA_ARGS__
+#define ca_array(...) ca_len(__VA_ARGS__), (typeof(__VA_ARGS__)[]){__VA_ARGS__}
 
 // assertions
 
