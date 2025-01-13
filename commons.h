@@ -34,12 +34,6 @@
 #define arr_len(arr) (sizeof((arr)) / sizeof((arr)[0])) 
 
 
-// ca args
-
-#define ca_len(...) sizeof((typeof(__VA_ARGS__)[]){__VA_ARGS__})/sizeof(typeof(__VA_ARGS__))
-#define ca_args(...) ca_len(__VA_ARGS__), __VA_ARGS__
-#define ca_array(...) ca_len(__VA_ARGS__), (typeof(__VA_ARGS__)[]){__VA_ARGS__}
-
 // assertions
 
 // for classic assertion, uses eprintfn for printing the message
