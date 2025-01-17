@@ -6,6 +6,7 @@
 #include <assert.h>
 
 // logging
+#define b2s(expr) ((expr)?"true":"false")
 
 // the ansi string representation of an rgb value
 #define ansi_rgb(r, g, b) ("\e[38;2;" #r ";" #g ";" #b "m") 
@@ -61,6 +62,7 @@ char* shift_args(int *argc, char ***argv)
 }
 
 // wrapper for atoi
+#include <ctype.h>
 int stoi(char *s, int *pI)
 {
     char *r = s;
@@ -103,6 +105,16 @@ char* read_entire_file(char *file_path)
     fread(content, 1, size, file);
     fclose(file);
     return content;
+}
+
+#define hash(obj) (_hash((void*)(obj), sizeof(*(obj))))
+int _hash(void *p, size_t n)
+{
+    size_t h = 5381; 
+    while (n-- > 0){
+        h = ((h << 5) + h) + *((char*)p++);
+    }
+    return h;
 }
 
 
